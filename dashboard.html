@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Include shared CSS file -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2 id="dashboard-heading">Welcome to the Dashboard</h2>
+    <div>
+      <button onclick="prevMonth()">Previous Month</button>
+      <button onclick="nextMonth()">Next Month</button>
+    </div>
+    <div id="calendar-container"></div> <!-- Container for the calendar -->
+  </div>
+
+  <script src="shared.js"></script> <!-- Include shared JavaScript file -->
+  <script src="dashboard.js"></script> <!-- Dashboard-specific JavaScript file -->
+</body>
+</html>

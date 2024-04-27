@@ -16,6 +16,53 @@ function displayCalendar(monthIndex, year) {
 
   var currentMonthName = monthNames[currentMonth];
 
+// Function to display the previous month
+function prevMonth() {
+  currentMonthIndex--;
+  if (currentMonthIndex < 0) {
+    currentMonthIndex = 11; // December
+    currentYear--;
+  }
+  displayCalendar(currentMonthIndex, currentYear);
+}
+
+// Function to display the next month
+function nextMonth() {
+  currentMonthIndex++;
+  if (currentMonthIndex > 11) {
+    currentMonthIndex = 0; // January
+    currentYear++;
+  }
+  displayCalendar(currentMonthIndex, currentYear);
+}
+
+// Function to generate and display the calendar for the given month and year
+function displayCalendar(monthIndex, year) {
+  // Existing code...
+
+  // Display the calendar in the container
+  document.getElementById("calendar-container").innerHTML = calendarHTML;
+
+  // Display option to add events if the user is admin
+  if (isAdmin) {
+    // Add event listeners to date cells for adding events
+    var dateCells = document.querySelectorAll("#calendar-container td");
+    dateCells.forEach(function(cell) {
+      cell.addEventListener("click", function() {
+        var selectedDate = cell.textContent;
+        var selectedMonth = monthIndex + 1; // Month is zero-indexed
+        var formattedDate = year + "-" + (selectedMonth < 10 ? "0" + selectedMonth : selectedMonth) + "-" + (selectedDate < 10 ? "0" + selectedDate : selectedDate);
+        var eventName = prompt("Enter event name:");
+        if (eventName) {
+          var eventColor = prompt("Enter event color (e.g., #ff0000):");
+          addEvent(formattedDate, eventName, eventColor);
+          displayCalendar(monthIndex, year); // Refresh calendar display
+        }
+      });
+    });
+  }
+}
+
   // Display the current month name
   document.getElementById("dashboard-heading").textContent = "Welcome to " + currentMonthName + " " + currentYear;
 
@@ -75,6 +122,25 @@ function displayCalendar(monthIndex, year) {
     });
   } else {
     document.getElementById("add-event-form").style.display = "none";
+  }
+}
+
+// Function to add event to the calendar
+function addEvent(date, name, color) {
+  // Create a unique ID for the event
+  var eventId = "event-" + Math.random().toString(36).substr(2, 9);
+
+  // Create event element
+  var eventElement = document.createElement("div");
+  eventElement.id = eventId;
+  eventElement.classList.add("event");
+  eventElement.style.backgroundColor = color;
+  eventElement.textContent = name;
+
+  // Find the cell corresponding to the date and append the event
+  var dateCell = document.querySelector("td[data-date='" + date + "']");
+  if (dateCell) {
+    dateCell.appendChild(eventElement);
   }
 }
 

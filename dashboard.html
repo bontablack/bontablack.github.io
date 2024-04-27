@@ -14,6 +14,26 @@
       <button onclick="nextMonth()">Next Month</button>
     </div>
     <div id="calendar-container"></div> <!-- Container for the calendar -->
+
+    <!-- Form for adding events -->
+    <div id="add-event-form" style="display: none;">
+      <h3>Add Event</h3>
+      <form id="event-form">
+        <div class="form-group">
+          <label for="event-date">Date:</label>
+          <input type="date" id="event-date" name="event-date" required>
+        </div>
+        <div class="form-group">
+          <label for="event-name">Name:</label>
+          <input type="text" id="event-name" name="event-name" required>
+        </div>
+        <div class="form-group">
+          <label for="event-color">Color:</label>
+          <input type="color" id="event-color" name="event-color" value="#ff0000">
+        </div>
+        <button type="submit">Add Event</button>
+      </form>
+    </div>
   </div>
 
   <script src="shared.js"></script> <!-- Include shared JavaScript file -->

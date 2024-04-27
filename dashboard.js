@@ -11,13 +11,28 @@ function displayCalendar(monthIndex, year) {
 
   // Display option to add events if the user is admin
   if (isAdmin) {
-    var addButton = document.createElement('button');
-    addButton.textContent = 'Add Event';
-    addButton.addEventListener('click', function() {
-      // Add event handling logic here
-      alert('Add event functionality is not implemented yet.');
+    document.getElementById("add-event-form").style.display = "block";
+    document.getElementById("event-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get event details from the form
+      var eventDate = document.getElementById("event-date").value;
+      var eventName = document.getElementById("event-name").value;
+      var eventColor = document.getElementById("event-color").value;
+
+      // Add event to the calendar
+      addEvent(eventDate, eventName, eventColor);
+
+      // Clear the form fields
+      document.getElementById("event-date").value = "";
+      document.getElementById("event-name").value = "";
+      document.getElementById("event-color").value = "#ff0000"; // Reset color to default
+
+      // Hide the form
+      document.getElementById("add-event-form").style.display = "none";
     });
-    document.getElementById("dashboard-heading").appendChild(addButton);
+  } else {
+    document.getElementById("add-event-form").style.display = "none";
   }
 
   // Existing code...
@@ -97,8 +112,19 @@ function nextMonth() {
   displayCalendar(currentMonthIndex, currentYear);
 }
 
+// Function to add event to the calendar
+function addEvent(date, name, color) {
+  // Add event handling logic here (e.g., update the calendar display)
+  // For demonstration purposes, let's just log the event details
+  console.log("New event added:");
+  console.log("Date: " + date);
+  console.log("Name: " + name);
+  console.log("Color: " + color);
+}
+
 // Initialize the calendar with the current month
 var currentDate = new Date();
 var currentMonthIndex = currentDate.getMonth();
 var currentYear = currentDate.getFullYear();
 displayCalendar(currentMonthIndex, currentYear);
+}

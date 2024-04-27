@@ -1,37 +1,41 @@
-document.getElementById("login-form").addEventListener("submit", function(event) {
-  event.preventDefault(); // Prevent form submission
+// Wait for the DOM to be fully loaded before accessing elements
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the login form element
+  var loginForm = document.getElementById("login-form");
 
-  // Get the username and password entered by the user
-  var username = document.getElementById("username").value;
-  var password = document.getElementById("password").value;
+  // Add event listener for form submission
+  loginForm.addEventListener("submit", function(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
 
-  // Define the list of possible usernames and passwords
-  var users = [
-    { username: "salsat", password: "test1234" },
-    { username: "marjur", password: "test1234" },
-    { username: "vojcer", password: "test1234" },
-    { username: "admin", password: "test1234" } // Add admin user
-  ];
+    // Get the username and password from the form
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
 
-  // Check if the entered username and password match any of the users
-  var isAuthenticated = users.some(function(user) {
-    return user.username === username && user.password === password;
+    // Check if the username and password match any of the predefined credentials
+    var validCredentials = [
+      { username: "salsat", password: "test1234" },
+      { username: "marjur", password: "test1234" },
+      { username: "vojcer", password: "test1234" } //Add admin user
+    ];
+
+    // Check if the entered credentials match any of the valid credentials
+    var isValidUser = validCredentials.some(function(credential) {
+      return credential.username === username && credential.password === password;
+    });
+
+    // If the credentials are valid, redirect to the dashboard with appropriate parameters
+    if (isValidUser) {
+      // Determine if the user is an admin
+      var isAdmin = username === "admin";
+      // Redirect to the dashboard with appropriate parameters
+      window.location.href = "dashboard.html?isAdmin=" + isAdmin;
+    } else {
+      // If the credentials are invalid, display an error message
+      document.getElementById("error-message").textContent = "Invalid username or password. Please try again.";
+    }
   });
-
-  if (isAuthenticated) {
-    // Set isAdmin flag based on the logged-in user
-    var isAdmin = username === "admin";
-    // Redirect to the dashboard page and pass isAdmin flag as URL parameter
-    window.location.href = "dashboard.html?isAdmin=" + isAdmin;
-  } else {
-    // Display error message if username or password is incorrect
-    document.getElementById("error-message").textContent = "Incorrect username or password";
-  }
 });
-
-// Get the isAdmin flag from the URL parameter
-var urlParams = new URLSearchParams(window.location.search);
-var isAdmin = urlParams.get('isAdmin') === 'true';
 
 // Function to generate and display the calendar for the given month and year
 function displayCalendar(monthIndex, year) {

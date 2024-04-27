@@ -4,20 +4,16 @@ var isAdmin = urlParams.get('isAdmin') === 'true';
 
 // Function to generate and display the calendar for the given month and year
 function displayCalendar(monthIndex, year) {
-  var currentDate = new Date();
-  var currentMonth = currentDate.getMonth();
-  var currentYear = currentDate.getFullYear();
-  
   // Array of month names
   var monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
 
-  var currentMonthName = monthNames[currentMonth];
+  var currentMonthName = monthNames[monthIndex];
 
   // Display the current month name
-  document.getElementById("dashboard-heading").textContent = "Welcome to " + currentMonthName + " " + currentYear;
+  document.getElementById("dashboard-heading").textContent = "Welcome to " + currentMonthName + " " + year;
 
   var firstDayOfMonth = new Date(year, monthIndex, 1);
   var lastDayOfMonth = new Date(year, monthIndex + 1, 0);

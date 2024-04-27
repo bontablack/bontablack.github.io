@@ -10,6 +10,8 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     { username: "salsat", password: "test1234" },
     { username: "marjur", password: "test1234" },
     { username: "vojcer", password: "test1234" },
+    { username: "tvojemama", password: "smrdi" },
+    { username: "adrian", password: "jekkt" },
     { username: "admin", password: "test1234" } // Add admin user
   ];
 

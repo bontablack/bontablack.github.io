@@ -4,48 +4,8 @@ var isAdmin = urlParams.get('isAdmin') === 'true';
 
 // Function to generate and display the calendar for the given month and year
 function displayCalendar(monthIndex, year) {
-  // Existing code...
-
-  // Display the current month name
-  document.getElementById("dashboard-heading").textContent = "Welcome to " + currentMonthName + " " + currentYear;
-
-  // Display option to add events if the user is admin
-  if (isAdmin) {
-    document.getElementById("add-event-form").style.display = "block";
-    document.getElementById("event-form").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent form submission
-
-      // Get event details from the form
-      var eventDate = document.getElementById("event-date").value;
-      var eventName = document.getElementById("event-name").value;
-      var eventColor = document.getElementById("event-color").value;
-
-      // Add event to the calendar
-      addEvent(eventDate, eventName, eventColor);
-
-      // Clear the form fields
-      document.getElementById("event-date").value = "";
-      document.getElementById("event-name").value = "";
-      document.getElementById("event-color").value = "#ff0000"; // Reset color to default
-
-      // Hide the form
-      document.getElementById("add-event-form").style.display = "none";
-    });
-  } else {
-    document.getElementById("add-event-form").style.display = "none";
-  }
-
-  // Existing code...
-}
-
-// Get the container for the calendar
-var calendarContainer = document.getElementById("calendar-container");
-var currentMonthIndex;
-
-// Function to generate and display the calendar for the given month and year
-function displayCalendar(monthIndex, year) {
-  currentMonthIndex = monthIndex;
-  var currentDate = new Date(year, monthIndex, 1);
+  var currentDate = new Date();
+  var currentMonth = currentDate.getMonth();
   var currentYear = currentDate.getFullYear();
   
   // Array of month names
@@ -54,13 +14,13 @@ function displayCalendar(monthIndex, year) {
     "July", "August", "September", "October", "November", "December"
   ];
 
-  var currentMonthName = monthNames[monthIndex];
+  var currentMonthName = monthNames[currentMonth];
 
   // Display the current month name
   document.getElementById("dashboard-heading").textContent = "Welcome to " + currentMonthName + " " + currentYear;
 
-  var firstDayOfMonth = new Date(currentYear, monthIndex, 1);
-  var lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0);
+  var firstDayOfMonth = new Date(year, monthIndex, 1);
+  var lastDayOfMonth = new Date(year, monthIndex + 1, 0);
 
   var daysInMonth = lastDayOfMonth.getDate();
   var startingDay = firstDayOfMonth.getDay();
@@ -89,27 +49,33 @@ function displayCalendar(monthIndex, year) {
   calendarHTML += "</table>";
 
   // Display the calendar in the container
-  calendarContainer.innerHTML = calendarHTML;
-}
+  document.getElementById("calendar-container").innerHTML = calendarHTML;
 
-// Function to display the previous month
-function prevMonth() {
-  currentMonthIndex--;
-  if (currentMonthIndex < 0) {
-    currentMonthIndex = 11; // December
-    currentYear--;
-  }
-  displayCalendar(currentMonthIndex, currentYear);
-}
+  // Display option to add events if the user is admin
+  if (isAdmin) {
+    document.getElementById("add-event-form").style.display = "block";
+    document.getElementById("event-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
 
-// Function to display the next month
-function nextMonth() {
-  currentMonthIndex++;
-  if (currentMonthIndex > 11) {
-    currentMonthIndex = 0; // January
-    currentYear++;
+      // Get event details from the form
+      var eventDate = document.getElementById("event-date").value;
+      var eventName = document.getElementById("event-name").value;
+      var eventColor = document.getElementById("event-color").value;
+
+      // Add event to the calendar
+      addEvent(eventDate, eventName, eventColor);
+
+      // Clear the form fields
+      document.getElementById("event-date").value = "";
+      document.getElementById("event-name").value = "";
+      document.getElementById("event-color").value = "#ff0000"; // Reset color to default
+
+      // Hide the form
+      document.getElementById("add-event-form").style.display = "none";
+    });
+  } else {
+    document.getElementById("add-event-form").style.display = "none";
   }
-  displayCalendar(currentMonthIndex, currentYear);
 }
 
 // Function to add event to the calendar
@@ -122,9 +88,19 @@ function addEvent(date, name, color) {
   console.log("Color: " + color);
 }
 
+// Function to display the previous month
+function prevMonth() {
+  // Add logic to display the previous month
+}
+
+// Function to display the next month
+function nextMonth() {
+  // Add logic to display the next month
+}
+
 // Initialize the calendar with the current month
 var currentDate = new Date();
 var currentMonthIndex = currentDate.getMonth();
 var currentYear = currentDate.getFullYear();
 displayCalendar(currentMonthIndex, currentYear);
-}
+

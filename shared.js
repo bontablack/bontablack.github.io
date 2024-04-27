@@ -34,33 +34,8 @@ var isAdmin = urlParams.get('isAdmin') === 'true';
 
 // Function to generate and display the calendar for the given month and year
 function displayCalendar(monthIndex, year) {
-  // Existing code...
-
-  // Display the current month name
-  document.getElementById("dashboard-heading").textContent = "Welcome to " + currentMonthName + " " + currentYear;
-
-  // Display option to add events if the user is admin
-  if (isAdmin) {
-    var addButton = document.createElement('button');
-    addButton.textContent = 'Add Event';
-    addButton.addEventListener('click', function() {
-      // Add event handling logic here
-      alert('Add event functionality is not implemented yet.');
-    });
-    document.getElementById("dashboard-heading").appendChild(addButton);
-  }
-
-  // Existing code...
-}
-
-// Get the container for the calendar
-var calendarContainer = document.getElementById("calendar-container");
-var currentMonthIndex;
-
-// Function to generate and display the calendar for the given month and year
-function displayCalendar(monthIndex, year) {
-  currentMonthIndex = monthIndex;
-  var currentDate = new Date(year, monthIndex, 1);
+  var currentDate = new Date();
+  var currentMonth = currentDate.getMonth();
   var currentYear = currentDate.getFullYear();
   
   // Array of month names
@@ -69,13 +44,13 @@ function displayCalendar(monthIndex, year) {
     "July", "August", "September", "October", "November", "December"
   ];
 
-  var currentMonthName = monthNames[monthIndex];
+  var currentMonthName = monthNames[currentMonth];
 
   // Display the current month name
   document.getElementById("dashboard-heading").textContent = "Welcome to " + currentMonthName + " " + currentYear;
 
-  var firstDayOfMonth = new Date(currentYear, monthIndex, 1);
-  var lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0);
+  var firstDayOfMonth = new Date(year, monthIndex, 1);
+  var lastDayOfMonth = new Date(year, monthIndex + 1, 0);
 
   var daysInMonth = lastDayOfMonth.getDate();
   var startingDay = firstDayOfMonth.getDay();
@@ -104,27 +79,53 @@ function displayCalendar(monthIndex, year) {
   calendarHTML += "</table>";
 
   // Display the calendar in the container
-  calendarContainer.innerHTML = calendarHTML;
+  document.getElementById("calendar-container").innerHTML = calendarHTML;
+
+  // Display option to add events if the user is admin
+  if (isAdmin) {
+    document.getElementById("add-event-form").style.display = "block";
+    document.getElementById("event-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get event details from the form
+      var eventDate = document.getElementById("event-date").value;
+      var eventName = document.getElementById("event-name").value;
+      var eventColor = document.getElementById("event-color").value;
+
+      // Add event to the calendar
+      addEvent(eventDate, eventName, eventColor);
+
+      // Clear the form fields
+      document.getElementById("event-date").value = "";
+      document.getElementById("event-name").value = "";
+      document.getElementById("event-color").value = "#ff0000"; // Reset color to default
+
+      // Hide the form
+      document.getElementById("add-event-form").style.display = "none";
+    });
+  } else {
+    document.getElementById("add-event-form").style.display = "none";
+  }
+}
+
+// Function to add event to the calendar
+function addEvent(date, name, color) {
+  // Add event handling logic here (e.g., update the calendar display)
+  // For demonstration purposes, let's just log the event details
+  console.log("New event added:");
+  console.log("Date: " + date);
+  console.log("Name: " + name);
+  console.log("Color: " + color);
 }
 
 // Function to display the previous month
 function prevMonth() {
-  currentMonthIndex--;
-  if (currentMonthIndex < 0) {
-    currentMonthIndex = 11; // December
-    currentYear--;
-  }
-  displayCalendar(currentMonthIndex, currentYear);
+  // Add logic to display the previous month
 }
 
 // Function to display the next month
 function nextMonth() {
-  currentMonthIndex++;
-  if (currentMonthIndex > 11) {
-    currentMonthIndex = 0; // January
-    currentYear++;
-  }
-  displayCalendar(currentMonthIndex, currentYear);
+  // Add logic to display the next month
 }
 
 // Initialize the calendar with the current month
@@ -132,3 +133,4 @@ var currentDate = new Date();
 var currentMonthIndex = currentDate.getMonth();
 var currentYear = currentDate.getFullYear();
 displayCalendar(currentMonthIndex, currentYear);
+

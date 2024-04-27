@@ -37,8 +37,7 @@ function displayCalendar(monthIndex, year) {
       } else if (dayCount > daysInMonth) {
         calendarHTML += "<td></td>";
       } else {
-        var formattedDate = year + "-" + (monthIndex + 1 < 10 ? "0" + (monthIndex + 1) : monthIndex + 1) + "-" + (dayCount < 10 ? "0" + dayCount : dayCount);
-        calendarHTML += "<td data-date='" + formattedDate + "'>" + dayCount + "</td>";
+        calendarHTML += "<td>" + dayCount + "</td>";
         dayCount++;
       }
     }
@@ -48,6 +47,10 @@ function displayCalendar(monthIndex, year) {
     }
   }
   calendarHTML += "</table>";
+
+  // Display the calendar in the container
+  document.getElementById("calendar-container").innerHTML = calendarHTML;
+}
 
   // Display the calendar in the container
   document.getElementById("calendar-container").innerHTML = calendarHTML;
